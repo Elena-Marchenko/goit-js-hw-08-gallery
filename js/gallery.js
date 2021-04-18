@@ -41,12 +41,13 @@ function onOpenModal(e) {
         refs.lightboxImageEl.alt = e.target.alt;
         refs.closeModalBtnEl.addEventListener('click', onCloseModal);
         refs.lightboxOverlayEl.addEventListener('click', onCloseOverlay);
-
+        window.addEventListener('keydown', onEscCloseModal);
     }
     
 };
 
 function onCloseModal() {
+    window.removeEventListener('keydown', onEscCloseModal);
     refs.lightboxOpenEl.classList.remove('is-open');
     refs.lightboxImageEl.src = '';
     refs.lightboxImageEl.alt = '';
@@ -56,6 +57,13 @@ function onCloseOverlay(e) {
     if (e.currentTarget === e.target){
         onCloseModal();
     }
+};
+
+function onEscCloseModal(e) {
+    if (e.code === 'Escape') {
+        onCloseModal();
+    }
+    
 };
 
 
