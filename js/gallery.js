@@ -28,15 +28,9 @@ const refs = {
     lightboxOpenEl: document.querySelector('.js-lightbox'),
     closeModalBtnEl: document.querySelector('[data-action="close-lightbox"]'),
     lightboxOverlayEl: document.querySelector('.lightbox__overlay'),
-    // lightboxContentEl: document.querySelector('.lightbox__content'),
     lightboxImageEl: document.querySelector('.lightbox__image'),
 };
 console.log(refs.lightboxImageEl);
-
-
-refs.closeModalBtnEl.addEventListener('click', onCloseModal);
-refs.lightboxOverlayEl.addEventListener('click', onCloseOverlay);
-
 
 
 function onOpenModal(e) {
