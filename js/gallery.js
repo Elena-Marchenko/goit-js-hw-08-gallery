@@ -1,9 +1,6 @@
 import importGalleryHistory from './gallery-items.js';
 
-
-const galeryEl = document.querySelector('.js-gallery');
-const galeryMarkup = makeGalleryRows(importGalleryHistory);
-galeryEl.insertAdjacentHTML('beforeend', galeryMarkup);
+const galleryEl = document.querySelector('.js-gallery');
 
 function makeGalleryRows (items) {
     return items.map(({ preview, original, description }) => {
@@ -19,8 +16,53 @@ function makeGalleryRows (items) {
         </a>
         </li>`;
     }).join('');
+    
+};
 
-}
+const galeryMarkup = makeGalleryRows(importGalleryHistory); // отрендеренная разметка
+galleryEl.insertAdjacentHTML('afterbegin', galeryMarkup); //Добавляет разметку в галлерею
+
+galleryEl.addEventListener('click', onOpenModal);
+
+const refs = {
+    lightboxOpenEl: document.querySelector('.js-lightbox'),
+    closeModalBtnEl: document.querySelector('[data-action="close-lightbox"]'),
+    lightboxOverlayEl: document.querySelector('.lightbox__overlay'),
+    // lightboxContentEl: document.querySelector('.lightbox__content'),
+    lightboxImageEl: document.querySelector('.lightbox__image'),
+};
+console.log(refs.lightboxImageEl);
+
+
+refs.closeModalBtnEl.addEventListener('click', onCloseModal);
+refs.lightboxOverlayEl.addEventListener('click', onCloseOverlay);
+
+
+
+function onOpenModal(e) {
+    e.preventDefault();
+    if (e.target.nodeName === 'IMG') {
+        refs.lightboxOpenEl.classList.add('is-open'); //!!!
+        refs.lightboxImageEl.src = e.target.dataset.source;
+        refs.lightboxImageEl.alt = e.target.alt;
+        refs.closeModalBtnEl.addEventListener('click', onCloseModal);
+        refs.lightboxOverlayEl.addEventListener('click', onCloseOverlay);
+
+    }
+    
+};
+
+function onCloseModal() {
+    refs.lightboxOpenEl.classList.remove('is-open');
+    refs.lightboxImageEl.src = '';
+    refs.lightboxImageEl.alt = '';
+};
+
+function onCloseOverlay(e) {
+    if (e.currentTarget === e.target){
+        onCloseModal();
+    }
+};
 
 
 
